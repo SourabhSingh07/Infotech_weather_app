@@ -22,7 +22,7 @@ def weather_data():
 #  this will append cities to external file and also check weather the city is already is in fav_city or not
 def fav_city():
     city = search_entry.get()
-    with open('Cities.txt', 'w+') as file:
+    with open('Cities.txt', 'a+') as file:
         cities = file.readlines()
         for line in cities:
             if line.strip() == city:
@@ -43,15 +43,16 @@ def view_weather(window):
 # remove the individual cities of the listbox and txt file 
 def remove():
     global view_listbox
-    selected_city = view_listbox.curselection()
-    if selected_city:
-        view_listbox.delete(selected_city)
-        with open('Cities.txt','r')as file:
-            content=file.read()
-        Remove=content.replace(selected_city,'')
-        with open('Cities.txt','w')as file:
+    selected_index = view_listbox.curselection()
+    if selected_index:
+        view_listbox.delete(selected_index[0])
+        with open('Cities.txt', 'r') as file:
+            content = file.read()
+            selected_city = view_listbox.get(selected_index[0])
+            Remove = content.replace(selected_city, '')
+        with open('Cities.txt', 'w') as file:
             file.write(Remove)
-            file.close()
+
 
 # Remove all the cities of listbox and txt file
 def removeall(window):
